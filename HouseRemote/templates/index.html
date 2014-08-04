@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Home Automation</title>
+
+
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="/static/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+
+    <style>
+       .btn-xlarge {
+    padding: 28px 38px;
+    font-size: 32px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+    }
+    </style>
+<!--$('input[name="1"]').val() -->
+<script type=text/javascript>
+    function successOp(successdiv, errordiv, successclass, successText) {
+        successdiv.removeClass("hidden alert-success alert-info");
+        successdiv.addClass(successclass);
+
+        errordiv.addClass("hidden");
+
+        successdiv.text(successText);
+        successdiv.fadeIn();
+        successdiv.delay(5000).fadeOut();
+    }
+
+    function errorOp(successdiv, errordiv, errorText) {
+        successdiv.addClass("hidden");
+
+        errordiv.removeClass("hidden");
+        errordiv.text(errorText);
+        errordiv.fadeIn();
+        errordiv.delay(5000).fadeOut();
+    }
+
+    $(document).ready(function() {
+        $("#on1").click(function() {
+            $.ajax({
+                type: "GET",
+                url: "/on/",
+                contentType: "application/json; charset=utf-8",
+                data: { switchValue: 1},
+                success: function(data) {
+                    var successdiv = $('#infoSuccess');
+                    var errordiv = $('#infoError');
+                    var successclass = "alert-success";
+                    var successText = "Successfully switched on " +data.value;
+                    successOp(successdiv, errordiv, successclass, successText);
+
+                },
+                error: function(data,txt,errorth) {
+                    var successdiv = $('#infoSuccess');
+                    var errordiv = $('#infoError');
+                    var errorText = errorth + " " + txt;
+
+                    errorOp(successdiv, errordiv, errorText);
+
+                }
+            });
+        });
+         $("#off1").click(function() {
+            $.ajax({
+                type: "GET",
+                url: "/off/",
+                contentType: "application/json; charset=utf-8",
+                data: { switchValue: 1},
+                success: function(data) {
+                    var successdiv = $('#infoSuccess');
+                    var errordiv = $('#infoError');
+                    var successclass = "alert-info";
+                    var successText = "Successfully switched off " +data.value;
+                    successOp(successdiv, errordiv, successclass, successText);
+
+                },
+                error: function(data,txt,errorth) {
+                    var successdiv = $('#infoSuccess');
+                    var errordiv = $('#infoError');
+                    var errorText = errorth + " " + txt;
+
+                    errorOp(successdiv, errordiv, errorText);
+                }
+            });
+        });
+    });
+</script>
+</head>
+<body>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Living Room</h3>
+            </div>
+             <div class="panel-body">
+                 <button class="btn btn-success btn-xlarge active" id="on1">On</button>
+                 <button class="btn btn-danger btn-xlarge active" id="off1"><i class="glyphicon glyphicon-off"></i> Off</button>
+             </div>
+        </div>
+    </div>
+ <div class="alert hidden" id="infoSuccess" role="alert">
+        Successfull.
+    </div>
+
+    <div class="alert alert-danger hidden" id="infoError"  role="alert">
+        Error
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
