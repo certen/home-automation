@@ -2,6 +2,8 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
     <title>Home Automation</title>
 
 
@@ -47,53 +49,88 @@
         errordiv.delay(5000).fadeOut();
     }
 
+    function switchOn(id) {
+        $.ajax({
+            type: "GET",
+            url: "/on/",
+            contentType: "application/json; charset=utf-8",
+            data: { switchValue: id},
+            success: function (data) {
+                var successdiv = $('#infoSuccess');
+                var errordiv = $('#infoError');
+                var successclass = "alert-success";
+                var successText = "Successfully switched on " + data.value;
+                successOp(successdiv, errordiv, successclass, successText);
+
+            },
+            error: function (data, txt, errorth) {
+                var successdiv = $('#infoSuccess');
+                var errordiv = $('#infoError');
+                var errorText = errorth + " " + txt;
+
+                errorOp(successdiv, errordiv, errorText);
+            }
+        });
+    }
+
+    function switchOff(id) {
+        $.ajax({
+            type: "GET",
+            url: "/off/",
+            contentType: "application/json; charset=utf-8",
+            data: { switchValue: id},
+            success: function (data) {
+                var successdiv = $('#infoSuccess');
+                var errordiv = $('#infoError');
+                var successclass = "alert-info";
+                var successText = "Successfully switched off " + data.value;
+                successOp(successdiv, errordiv, successclass, successText);
+
+            },
+            error: function (data, txt, errorth) {
+                var successdiv = $('#infoSuccess');
+                var errordiv = $('#infoError');
+                var errorText = errorth + " " + txt;
+
+                errorOp(successdiv, errordiv, errorText);
+            }
+        });
+    }
     $(document).ready(function() {
         $("#on1").click(function() {
-            $.ajax({
-                type: "GET",
-                url: "/on/",
-                contentType: "application/json; charset=utf-8",
-                data: { switchValue: 1},
-                success: function(data) {
-                    var successdiv = $('#infoSuccess');
-                    var errordiv = $('#infoError');
-                    var successclass = "alert-success";
-                    var successText = "Successfully switched on " +data.value;
-                    successOp(successdiv, errordiv, successclass, successText);
-
-                },
-                error: function(data,txt,errorth) {
-                    var successdiv = $('#infoSuccess');
-                    var errordiv = $('#infoError');
-                    var errorText = errorth + " " + txt;
-
-                    errorOp(successdiv, errordiv, errorText);
-
-                }
-            });
+            switchOn(1);
         });
-         $("#off1").click(function() {
-            $.ajax({
-                type: "GET",
-                url: "/off/",
-                contentType: "application/json; charset=utf-8",
-                data: { switchValue: 1},
-                success: function(data) {
-                    var successdiv = $('#infoSuccess');
-                    var errordiv = $('#infoError');
-                    var successclass = "alert-info";
-                    var successText = "Successfully switched off " +data.value;
-                    successOp(successdiv, errordiv, successclass, successText);
 
-                },
-                error: function(data,txt,errorth) {
-                    var successdiv = $('#infoSuccess');
-                    var errordiv = $('#infoError');
-                    var errorText = errorth + " " + txt;
 
-                    errorOp(successdiv, errordiv, errorText);
-                }
-            });
+        $("#off1").click(function() {
+            switchOff(1);
+        });
+
+        $("#on2").click(function() {
+            switchOn(2);
+        });
+
+
+        $("#off2").click(function() {
+            switchOff(2);
+        });
+
+        $("#on3").click(function() {
+            switchOn(4);
+        });
+
+
+        $("#off3").click(function() {
+            switchOff(3);
+        });
+
+        $("#on4").click(function() {
+            switchOn(4);
+        });
+
+
+        $("#off4").click(function() {
+            switchOff(4);
         });
     });
 </script>
@@ -104,12 +141,50 @@
     <div class="row">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Living Room</h3>
+                <h3 class="panel-title">Switch 1</h3>
             </div>
              <div class="panel-body">
                  <button class="btn btn-success btn-xlarge active" id="on1">On</button>
                  <button class="btn btn-danger btn-xlarge active" id="off1"><i class="glyphicon glyphicon-off"></i> Off</button>
              </div>
+        </div>
+    </div>
+
+     <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Switch 2</h3>
+            </div>
+             <div class="panel-body">
+                 <button class="btn btn-success btn-xlarge active" id="on2">On</button>
+                 <button class="btn btn-danger btn-xlarge active" id="off2"><i class="glyphicon glyphicon-off"></i> Off</button>
+             </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Switch 3</h3>
+            </div>
+            <div class="panel-body">
+                <button class="btn btn-success btn-xlarge active" id="on3">On</button>
+                <button class="btn btn-danger btn-xlarge active" id="off3"><i class="glyphicon glyphicon-off"></i> Off</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Switch 4</h3>
+            </div>
+            <div class="panel-body">
+                <button class="btn btn-success btn-xlarge active" id="on4">On</button>
+                <button class="btn btn-danger btn-xlarge active" id="off4"><i class="glyphicon glyphicon-off"></i> Off</button>
+            </div>
         </div>
     </div>
  <div class="alert hidden" id="infoSuccess" role="alert">
